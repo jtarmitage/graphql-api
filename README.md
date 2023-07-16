@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# GraphQL Demo App
+
+This app demonstrates some simple queries against the GitHub GraphQL API.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+Create a personal token and add it to a .env file to run this project. A env-template file has been created to assist with this.
 
 ## Available Scripts
 
