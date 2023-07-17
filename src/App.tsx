@@ -78,9 +78,7 @@ function App() {
     <>
       <Container>
         <Header />
-        <div className="App">
-          <DisplayRepositories query="topic:react" />
-        </div>
+        <DisplayRepositories query="topic:react" />
       </Container>
     </>
   );
