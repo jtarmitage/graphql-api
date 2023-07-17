@@ -4,6 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
 import { GetRepositoriesQuery } from './gql/graphql';
+import Header from './components/Header';
+import Loading from './components/Loading';
+import ErrorMessage from './components/ErrorMessage';
 
 const GET_REPOSITORIES = gql`
   query GetRepositories($repoQuery: String!) {
@@ -64,19 +67,22 @@ function DisplayRepositories({ query }: { query: string }) {
     }
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
+  if (loading) return <Loading />;
+  if (error) return <ErrorMessage message={error.message} />;
 
   return <SearchResults data={data} />;
 }
 
 function App() {
   return (
-    <Container>
-      <div className="App">
-        <DisplayRepositories query="topic:react" />
-      </div>
-    </Container>
+    <>
+      <Container>
+        <Header />
+        <div className="App">
+          <DisplayRepositories query="topic:react" />
+        </div>
+      </Container>
+    </>
   );
 }
 
