@@ -1,13 +1,18 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+import Table from 'react-bootstrap/Table';
+import { GetRepositoriesQuery } from './gql/graphql';
 
 const GET_REPOSITORIES = gql`
-  query {
-    search(query: "topic:react", type: REPOSITORY, first: 10) {
+  query GetRepositories($repoQuery: String!) {
+    search(query: $repoQuery, type: REPOSITORY, first: 10) {
       repositoryCount
       edges {
         node {
           ... on Repository {
+            id
             name
             url
             stargazerCount
@@ -19,40 +24,59 @@ const GET_REPOSITORIES = gql`
   }
 `;
 
-interface RepositoryInfo {
-  id: string;
-  name: string;
-  url: string;
-  stargazerCount: number;
-  forkCount: number;
+function SearchResults({ data }: { data: GetRepositoriesQuery }) {
+  const repositories = data.search.edges;
+
+  return (
+    <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>Repository Name</th>
+          <th>🌟 Stars</th>
+          <th>🍴 Forks</th>
+        </tr>
+      </thead>
+      <tbody>
+        {repositories &&
+          repositories.map((edge) => {
+            if (edge && edge.node && edge.node.__typename === 'Repository') {
+              const { id, name, url, stargazerCount, forkCount } = edge.node;
+              return (
+                <tr key={id}>
+                  <td>
+                    <a href={url}>{name}</a>
+                  </td>
+                  <td>🌟 {stargazerCount}</td>
+                  <td>🍴 {forkCount}</td>
+                </tr>
+              );
+            }
+          })}
+      </tbody>
+    </Table>
+  );
 }
 
-interface Repositories {
-  [node: string]: RepositoryInfo;
-}
-
-function DisplayRepositories() {
-  const { loading, error, data } = useQuery(GET_REPOSITORIES);
+function DisplayRepositories({ query }: { query: string }) {
+  const { loading, error, data } = useQuery(GET_REPOSITORIES, {
+    variables: {
+      repoQuery: query
+    }
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
 
-  return data.search.edges.map(({ node }: Repositories) => (
-    <ul key={node.id}>
-      <li>
-        <span>
-          <a href={node.url}>{node.name}</a> - 🌟 {node.stargazerCount} - 🍴 {node.forkCount}
-        </span>
-      </li>
-    </ul>
-  ));
+  return <SearchResults data={data} />;
 }
 
 function App() {
   return (
-    <div className="App">
-      <DisplayRepositories />
-    </div>
+    <Container>
+      <div className="App">
+        <DisplayRepositories query="topic:react" />
+      </div>
+    </Container>
   );
 }
 
