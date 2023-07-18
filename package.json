@@ -27,6 +27,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "eslint . --ext .ts,.tsx --fix",
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "eslintConfig": {
