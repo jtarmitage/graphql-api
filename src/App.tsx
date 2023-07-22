@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
@@ -7,6 +7,7 @@ import { GetRepositoriesQuery } from './gql/graphql';
 import Header from './components/Header';
 import Loading from './components/Loading';
 import ErrorMessage from './components/ErrorMessage';
+import SearchInput from './components/SearchInput';
 
 const GET_REPOSITORIES = gql`
   query GetRepositories($repoQuery: String!) {
@@ -74,11 +75,18 @@ function DisplayRepositories({ query }: { query: string }) {
 }
 
 function App() {
+  const [searchValue, setSearchValue] = useState('topic:react');
+
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value);
+  };
+
   return (
     <>
       <Container>
         <Header />
-        <DisplayRepositories query="topic:react" />
+        <SearchInput onChange={handleSearchChange} />
+        <DisplayRepositories query={searchValue} />
       </Container>
     </>
   );
