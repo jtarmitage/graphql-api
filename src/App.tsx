@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
@@ -8,25 +8,7 @@ import Header from './components/Header';
 import Loading from './components/Loading';
 import ErrorMessage from './components/ErrorMessage';
 import SearchInput from './components/SearchInput';
-
-const GET_REPOSITORIES = gql`
-  query GetRepositories($repoQuery: String!) {
-    search(query: $repoQuery, type: REPOSITORY, first: 10) {
-      repositoryCount
-      edges {
-        node {
-          ... on Repository {
-            id
-            name
-            url
-            stargazerCount
-            forkCount
-          }
-        }
-      }
-    }
-  }
-`;
+import { GET_REPOSITORIES } from './gql/queries/getRepositories';
 
 function SearchResults({ data }: { data: GetRepositoriesQuery }) {
   const repositories = data.search.edges;
