@@ -10,7 +10,7 @@ import ErrorMessage from './components/ErrorMessage';
 import SearchInput from './components/SearchInput';
 import { GET_REPOSITORIES } from './gql/queries/getRepositories';
 
-function SearchResults({ data }: { data: GetRepositoriesQuery }) {
+const SearchResults = ({ data }: { data: GetRepositoriesQuery }) => {
   const repositories = data.search.edges;
 
   return (
@@ -41,9 +41,9 @@ function SearchResults({ data }: { data: GetRepositoriesQuery }) {
       </tbody>
     </Table>
   );
-}
+};
 
-function DisplayRepositories({ query }: { query: string }) {
+const DisplayRepositories = ({ query }: { query: string }) => {
   const { loading, error, data } = useQuery(GET_REPOSITORIES, {
     variables: {
       repoQuery: query
@@ -54,9 +54,9 @@ function DisplayRepositories({ query }: { query: string }) {
   if (error) return <ErrorMessage message={error.message} />;
 
   return <SearchResults data={data} />;
-}
+};
 
-function App() {
+const App = () => {
   const [searchValue, setSearchValue] = useState('topic:react');
 
   const handleSearchChange = (value: string) => {
@@ -72,6 +72,6 @@ function App() {
       </Container>
     </>
   );
-}
+};
 
 export default App;
