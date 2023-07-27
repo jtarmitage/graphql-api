@@ -6,9 +6,9 @@ export const SearchResults = ({ data }: { data: GetRepositoriesQuery }) => {
   const repositories = data.search.edges;
 
   return (
-    <Table striped bordered hover>
+    <Table striped bordered hover data-testid="search-results">
       <thead>
-        <tr>
+        <tr data-testid="header-row">
           <th>Repository Name</th>
           <th>🌟 Stars</th>
           <th>🍴 Forks</th>
