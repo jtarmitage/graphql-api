@@ -1,36 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { GetRepositoriesQuery } from '../gql/graphql';
 import { SearchResults } from './SearchResults';
-
-// Sample mock data for the test
-const mockData: GetRepositoriesQuery = {
-  search: {
-    repositoryCount: 2,
-    edges: [
-      {
-        node: {
-          id: '1',
-          name: 'Test Repo 1',
-          url: 'https://example.com/test-repo-1',
-          stargazerCount: 100,
-          forkCount: 50,
-          __typename: 'Repository'
-        }
-      },
-      {
-        node: {
-          id: '2',
-          name: 'Test Repo 2',
-          url: 'https://example.com/test-repo-2',
-          stargazerCount: 200,
-          forkCount: 75,
-          __typename: 'Repository'
-        }
-      }
-    ]
-  }
-};
+import { mockData, invalidMockData } from '../services/mockedData';
 
 describe('SearchResults', () => {
   test('renders the table with repository data', () => {
@@ -58,25 +29,6 @@ describe('SearchResults', () => {
   });
 
   test('does not render invalid repository data', () => {
-    // Modify the mockData to include an invalid entry
-    const invalidMockData: GetRepositoriesQuery = {
-      search: {
-        repositoryCount: 1,
-        edges: [
-          {
-            node: {
-              id: '3',
-              name: 'Invalid Repo',
-              url: 'https://example.com/invalid-repo',
-              stargazerCount: 300,
-              forkCount: 125
-              // Missing __typename field makes this entry invalid
-            }
-          }
-        ]
-      }
-    };
-
     const { queryByText } = render(<SearchResults data={invalidMockData} />);
 
     // The invalid repository data should not be rendered

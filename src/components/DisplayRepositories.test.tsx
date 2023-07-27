@@ -2,37 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { DisplayRepositories } from './DisplayRepositories';
-import { GetRepositoriesQuery } from '../gql/graphql';
 import { useQuery as originalUseQuery } from '@apollo/client';
-
-// Sample mock data for the test
-const mockData: GetRepositoriesQuery = {
-  search: {
-    repositoryCount: 2,
-    edges: [
-      {
-        node: {
-          id: '1',
-          name: 'Test Repo 1',
-          url: 'https://example.com/test-repo-1',
-          stargazerCount: 100,
-          forkCount: 50,
-          __typename: 'Repository'
-        }
-      },
-      {
-        node: {
-          id: '2',
-          name: 'Test Repo 2',
-          url: 'https://example.com/test-repo-2',
-          stargazerCount: 200,
-          forkCount: 75,
-          __typename: 'Repository'
-        }
-      }
-    ]
-  }
-};
+import { mockData } from '../services/mockedData';
 
 // Mock the useQuery function
 const useQuery = originalUseQuery as jest.Mock;
