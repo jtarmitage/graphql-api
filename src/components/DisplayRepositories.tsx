@@ -5,8 +5,15 @@ import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
 import { GET_REPOSITORIES } from '../gql/queries/getRepositories';
 import { SearchResults } from '../components/SearchResults';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 export const DisplayRepositories = ({ query }: { query: string }) => {
+  const rightButtonStyles = {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  };
+
   const [endCursor, setEndCursor] = useState<string | null>(null);
   const [startCursor, setStartCursor] = useState<string | null>(null);
 
@@ -59,19 +66,27 @@ export const DisplayRepositories = ({ query }: { query: string }) => {
 
   return (
     <>
-      <SearchResults data={data} />
-      <div className="pagination-buttons">
-        {startCursor && (
-          <Button variant="primary" onClick={handlePreviousPage}>
-            Previous
-          </Button>
-        )}
-        {endCursor && (
-          <Button variant="primary" onClick={handleNextPage}>
-            Next
-          </Button>
-        )}
-      </div>
+      <Row>
+        <Col>
+          <SearchResults data={data} />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          {startCursor && (
+            <Button variant="primary" onClick={handlePreviousPage}>
+              Previous
+            </Button>
+          )}
+        </Col>
+        <Col style={rightButtonStyles}>
+          {endCursor && (
+            <Button variant="primary" onClick={handleNextPage}>
+              Next
+            </Button>
+          )}
+        </Col>
+      </Row>
     </>
   );
 };
