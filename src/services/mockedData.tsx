@@ -25,7 +25,14 @@ export const mockData: GetRepositoriesQuery = {
           __typename: 'Repository'
         }
       }
-    ]
+    ],
+    pageInfo: {
+      hasNextPage: true,
+      hasPreviousPage: true,
+      startCursor: 'Y3Vyc29yOjEx',
+      endCursor: 'Y3Vyc29yOjIw',
+      __typename: 'PageInfo'
+    }
   }
 };
 
@@ -43,6 +50,13 @@ export const invalidMockData: GetRepositoriesQuery = {
           // Missing __typename field makes this entry invalid
         }
       }
-    ]
+    ],
+    pageInfo: {
+      hasNextPage: true,
+      hasPreviousPage: true,
+      startCursor: 'Y3Vyc29yOjEx',
+      endCursor: 'Y3Vyc29yOjIw',
+      __typename: 'PageInfo'
+    }
   }
 };
