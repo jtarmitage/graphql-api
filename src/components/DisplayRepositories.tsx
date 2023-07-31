@@ -20,14 +20,12 @@ export const DisplayRepositories = ({ query }: { query: string }) => {
     onCompleted: (result) => {
       if (result?.search?.pageInfo?.hasNextPage) {
         setEndCursor(result.search.pageInfo.endCursor);
-        console.log(result.search.pageInfo.endCursor);
       } else {
         setEndCursor(null);
       }
 
       if (result?.search?.pageInfo?.hasPreviousPage) {
         setStartCursor(result.search.pageInfo.startCursor);
-        console.log(result.search.pageInfo.startCursor);
       } else {
         setStartCursor(null);
       }
