@@ -4,7 +4,19 @@ This app demonstrates some simple queries against the GitHub GraphQL API.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Create a personal token and add it to a .env.local file to run this project. A env-template file has been created to assist with this.
+Create a personal token and add it to a .env.local file to run this project. A .env-template file has been created in the /src folder to assist with this.
+
+## Reflections and Future Improvements
+
+Accessing the individual data of each node (repository name, URL etc.) took longer than expected because edges can have multiple types - not just Repository. The TypeScript error that was thrown didn't give many clues as to how it could be resolved. After some research I discovered an extra check for **edge.node.\_\_typename === 'Repository'** would fix the issue.
+
+Simple pagination has been added. I was hoping to be able to add numbered pagination, e.g. Previous and Next buttons, with 1-10 in the middle, changing to 2-11, 3-12 as the pages change. However the GraphQL API doesn't appear to offer numbered offsets for search, which means that we have to use cursor based pagination and can't directly address a specific page.
+
+Caching of the results could potentially be improved. Currently the code discards any existing results and only returns the incoming results from the API. It should be possible to return listings faster if we have already visited a page.
+
+By default the search query is 'topic: react'. It would be nice to show that in the search bar, and provide helpful guidance to the user about which searches can be made.
+
+This is not an exhaustive list of improvements. On an open-ended project such as this there will always be something which could be added. I hope that it at least shows an ability to make GraphQL queries and manipulate the data within a React and TypeScript project.
 
 ## Available Scripts
 
